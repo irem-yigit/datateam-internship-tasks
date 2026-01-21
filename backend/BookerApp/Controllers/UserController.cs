@@ -11,7 +11,7 @@ namespace BookerApp.Controllers;
 [Route("api/users")]
 public class UserController : ControllerBase
 {
-    private readonly IUserService _userService;
+    private readonly IUserService _userService;      // Dependency Injection of UserService
     public UserController(IUserService userService)
     {
         _userService = userService;

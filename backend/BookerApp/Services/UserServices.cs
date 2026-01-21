@@ -3,7 +3,7 @@ using BookerApp.Models;
 namespace BookerApp.Services;
 public class UserService :IUserService
 {
-    private static List<User> _users = new();
+    private static List<User> _users = new();     
 
     public List<User> GetAllUsers()
     {
