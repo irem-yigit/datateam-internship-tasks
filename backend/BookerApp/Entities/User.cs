@@ -2,7 +2,6 @@ namespace BookerApp.Models
 {
     public class User
     {
-        [GeneratedType.Identity] 
         public Long Id { get;set;}
 
         [Required(ErrorMessage = "Username cannot be blank")]
