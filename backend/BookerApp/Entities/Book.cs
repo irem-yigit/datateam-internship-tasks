@@ -18,8 +18,8 @@ namespace BookerApp.Models
         public string Publisher { get; set;}
 
         [Required(ErrorMessage = "Isbn cannot be blank")]
-        [StringLength(13, MinimumLength = 13, ErrorMessage = "ISBN must be between 13 characters")]
-        [RegularExpression(@"^[0-9X]*$", ErrorMessage = "ISBN must only contain numbers and 'X'")]
+        [StringLength(13, MinimumLength = 13, ErrorMessage = "ISBN must be exactly 13 characters")]
+        [RegularExpression(@"^[0-9]{13}$", ErrorMessage = "ISBN must contain only digits")]
         public string Isbn { get;set;}
 
         [Required(ErrorMessage = "Page count cannot be blank")]
