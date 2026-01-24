@@ -5,16 +5,19 @@ using System.Data.Common;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using BookerApp.Services;
+using BookerApp.Data;
 
 namespace BookerApp.Controllers;
 [ApiController]
 [Route("api/users")]
 public class UserController : ControllerBase
 {
-    private readonly IUserService _userService;      // Dependency Injection of UserService
-    public UserController(IUserService userService)
+    private readonly AppDbContext _context;
+    private readonly IUserService _userService;   // Dependency Injection of UserService
+    public UserController(IUserService userService, AppDbContext context)
     {
         _userService = userService;
+        _context = context;
     }
 
     //Get all users 

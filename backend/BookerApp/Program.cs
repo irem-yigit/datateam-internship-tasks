@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // DB Connection
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -15,6 +15,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
+
+// Auto-migrate
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -26,11 +33,4 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 app.MapControllers();
-
-app.MapGet("/", () =>
-{
-    return "Welcome to BookerApp API!";
-})
-.WithName("GetWelcomeMessage");
-
 app.Run();

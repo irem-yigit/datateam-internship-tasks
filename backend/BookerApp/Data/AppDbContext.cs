@@ -9,7 +9,7 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<User> Users => Set<User>();
-    public DbSet<Book> Books => Set<Book>();
+    public DbSet<User> Users { get; set; }
+    //public DbSet<Book> Books { get; set; }
 
 }
