@@ -24,13 +24,14 @@ public class UserController : ControllerBase
     [HttpGet]
     public IActionResult GetAllUsers()
     {
-        return Ok(_userService.GetAllUsers());
+        return Ok(_context.userService.GetAllUsers());
     }
 
     //Get user by id
     [HttpGet("{id}")]
     public IActionResult GetUserById(int id)
     {
+        var user = _userService.GetById(id);
         if (user == null)
             return NotFound("User not found");
         return Ok(user);
