@@ -1,4 +1,4 @@
-using BookerApp.Models;
+using BookerApp.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookerApp.Data; 

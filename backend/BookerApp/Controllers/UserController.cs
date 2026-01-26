@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using BookerApp.Models;
+using BookerApp.Entities;
 using System.Runtime.Versioning;
 using System.Data.Common;
 using System.ComponentModel.DataAnnotations;
@@ -12,26 +12,24 @@ namespace BookerApp.Controllers;
 [Route("api/users")]
 public class UserController : ControllerBase
 {
-    private readonly AppDbContext _context;
     private readonly IUserService _userService;   // Dependency Injection of UserService
-    public UserController(IUserService userService, AppDbContext context)
+    public UserController(IUserService userService)
     {
         _userService = userService;
-        _context = context;
     }
 
     //Get all users 
     [HttpGet]
     public IActionResult GetAllUsers()
     {
-        return Ok(_context.userService.GetAllUsers());
+        return Ok(_userService.GetAllUsers());
     }
 
     //Get user by id
     [HttpGet("{id}")]
     public IActionResult GetUserById(int id)
     {
-        var user = _userService.GetById(id);
+        var user = _userService.GetUserById(id);
         if (user == null)
             return NotFound("User not found");
         return Ok(user);
@@ -41,7 +39,7 @@ public class UserController : ControllerBase
     [HttpPost]
     public IActionResult CreateUser ([FromBody] User user)
     {
-        var createdUser = _userService.Create(user);
+        var createdUser = _userService.CreateUser(user);
         return CreatedAtAction(nameof(GetUserById),
             new { id = createdUser.Id },
             createdUser);
@@ -51,7 +49,7 @@ public class UserController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult UpdateUser(int id, [FromBody] User user)
     {
-        var updatedUser = _userService.Update(id, user);
+        var updatedUser = _userService.UpdateUser(id, user);
 
         if (updatedUser == null)
             return NotFound("User not found");
@@ -60,13 +58,16 @@ public class UserController : ControllerBase
 
     //Delete a user by id
     [HttpDelete("{id}")]
-    public IActionResult DeleteUser (int id)
+    public IActionResult DeleteUser(int id)
     {
-        var isDeleted = _userService.Delete(id);
-
-        if (!isDeleted)
+        try
+        {
+            _userService.DeleteUser(id);
+            return Ok(new { message = "User deleted successfully" });
+        }
+        catch (KeyNotFoundException)
+        {
             return NotFound("User not found");
-
-        return Ok(new { message = "User deleted successfully" });
+        }
     }
 }
