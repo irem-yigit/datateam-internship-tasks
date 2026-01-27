@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using BookerApp.Models;
+using BookerApp.Entities;
 using System.Runtime.Versioning;
 using System.Data.Common;
 using System.ComponentModel.DataAnnotations;

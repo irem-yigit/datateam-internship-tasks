@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace BookerApp.Models;
+namespace BookerApp.Entities;
 public class UserRequestDTO
 {
     [Required(ErrorMessage = "Username cannot be blank")]

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BookerApp.Models;
+namespace BookerApp.Entities;
 
 public class UserResponseDTO
 {
