@@ -1,5 +1,29 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import {ref} from 'vue';
+
+const output = ref("");
+
+function print(title, data){
+  output.value = `${title}\n${JSON.stringify(data, null, 2)}`;
+}
+
+/* ---------------------------------
+   CALLBACK
+----------------------------------*/
+function getUsersCallback(callback) {
+  fetch("https://jsonplaceholder.typicode.com/users")
+    .then(res => res.json())
+    .then(data => callback(null, data))
+    .catch(err => callback(err));
+}
+
+function loadWithCallback() {
+  getUsersCallback((err, users) => {
+    if (err) return console.error(err);
+    print("CALLBACK RESULT", users);
+  });
+}
+
 </script>
 
 <template>
@@ -21,7 +45,7 @@ import HelloWorld from './components/HelloWorld.vue'
   will-change: filter;
   transition: filter 300ms;
 }
-.logo:hover {
+.logo:hover { 
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.vue:hover {
