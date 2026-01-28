@@ -38,6 +38,15 @@ function loadWithPromise() {
     .catch(err => console.error(err));
 }
 
+/* ---------------------------------
+   ASYNC / AWAIT
+----------------------------------*/
+async function loadWithAsync() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  const users = await res.json();
+  print("ASYNC / AWAIT RESULT", users);
+}
+
 
 
 </script>
