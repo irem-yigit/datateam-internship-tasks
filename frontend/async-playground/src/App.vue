@@ -47,7 +47,37 @@ async function loadWithAsync() {
   print("ASYNC / AWAIT RESULT", users);
 }
 
+/* ---------------------------------
+   SERIAL REQUEST
+----------------------------------*/
+async function loadSerial() {
+  const userRes = await fetch(
+    "https://jsonplaceholder.typicode.com/users/1"
+  );
+  const user = await userRes.json();
 
+  const postRes = await fetch(
+    `https://jsonplaceholder.typicode.com/posts?userId=${user.id}`
+  );
+  const posts = await postRes.json();
+
+  print("SERIAL REQUEST", { user, posts });
+}
+
+/* ---------------------------------
+   PARALLEL REQUEST
+----------------------------------*/
+async function loadParallel() {
+  const [usersRes, postsRes] = await Promise.all([
+    fetch("https://jsonplaceholder.typicode.com/users"),
+    fetch("https://jsonplaceholder.typicode.com/posts")
+  ]);
+
+  const users = await usersRes.json();
+  const posts = await postsRes.json();
+
+  print("PARALLEL REQUEST", { users, posts });
+}
 
 </script>
 
